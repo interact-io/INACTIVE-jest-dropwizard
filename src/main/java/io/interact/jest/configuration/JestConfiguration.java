@@ -22,6 +22,6 @@ public class JestConfiguration {
 
 	@ValidationMethod
     public boolean isValidConfig() {
-        return !StringUtils.isNotEmpty(connectionURL);
+        return !StringUtils.isEmpty(connectionURL);
     }
 }
