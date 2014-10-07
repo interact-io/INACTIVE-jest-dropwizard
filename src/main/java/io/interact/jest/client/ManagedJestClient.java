@@ -40,6 +40,7 @@ public class ManagedJestClient implements Managed {
         factory.setHttpClientConfig(new HttpClientConfig
                                .Builder(config.getConnectionURL())
                                .multiThreaded(true)
+                               .gson(gb.create())
                                .build());
         this.jestClient = factory.getObject();
     }
