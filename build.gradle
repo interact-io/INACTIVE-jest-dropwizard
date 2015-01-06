@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.5'
+    compile 'com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.1.0'
     compile 'org.apache.commons:commons-lang3:3.3.2'
     compile "io.dropwizard:dropwizard-jackson:$dropwizardVersion"
     compile "io.dropwizard:dropwizard-validation:$dropwizardVersion"

@@ -2,11 +2,13 @@ package io.interact.jest.client;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import org.joda.time.JodaTimePermission;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.LoggerContext;
 
+import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.GsonBuilder;
 
 import io.dropwizard.lifecycle.Managed;
@@ -35,6 +37,8 @@ public class ManagedJestClient implements Managed {
         		LOG.error("Unable to instance class adapter {}",adapter);
         	}
 		}
+        
+        Converters.registerDateTime(gb);
         
         JestClientFactory factory = new JestClientFactory();
         factory.setHttpClientConfig(new HttpClientConfig
