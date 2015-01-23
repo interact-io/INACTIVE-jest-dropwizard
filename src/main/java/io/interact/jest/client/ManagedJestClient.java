@@ -42,10 +42,10 @@ public class ManagedJestClient implements Managed {
         
         JestClientFactory factory = new JestClientFactory();
         factory.setHttpClientConfig(new HttpClientConfig
-                               .Builder(config.getConnectionURL())
+                               .Builder(config.getConnectionURLS())
                                .multiThreaded(true)
-                               .readTimeout(6000)
-                               .connTimeout(3000)
+                               .readTimeout(60000)
+                               .connTimeout(30000)
                                .gson(gb.create())
                                .build());
         this.jestClient = factory.getObject();

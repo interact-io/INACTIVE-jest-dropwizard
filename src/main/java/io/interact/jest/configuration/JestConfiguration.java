@@ -17,13 +17,13 @@ public class JestConfiguration {
 	
 	@JsonProperty
 	@NotNull
-	String connectionURL = "http://localhost:9200";
+	List<String> connectionURLs = Lists.newArrayList("http://localhost:9200");
 	
 	List<String> adapters = Lists.newArrayList();
 	
 	
-	public String getConnectionURL() {
-		return connectionURL;
+	public List<String> getConnectionURLS() {
+		return connectionURLs;
 	}
 	
 	
@@ -34,7 +34,7 @@ public class JestConfiguration {
 
 	@ValidationMethod
     public boolean isValidConfig() {
-        return !StringUtils.isEmpty(connectionURL);
+        return !connectionURLs.isEmpty();
     }
 }
 
