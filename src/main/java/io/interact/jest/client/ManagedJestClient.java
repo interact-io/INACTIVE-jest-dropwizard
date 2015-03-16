@@ -41,9 +41,11 @@ public class ManagedJestClient implements Managed {
         Converters.registerDateTime(gb);
         
         JestClientFactory factory = new JestClientFactory();
+        
         factory.setHttpClientConfig(new HttpClientConfig
                                .Builder(config.getConnectionURLS())
                                .multiThreaded(true)
+                               
                                .readTimeout(60000)
                                .connTimeout(30000)
                                .gson(gb.create())
