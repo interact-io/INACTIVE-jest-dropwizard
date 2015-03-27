@@ -2,6 +2,8 @@ package io.interact.jest.client;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.concurrent.TimeUnit;
+
 import org.joda.time.JodaTimePermission;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +49,7 @@ public class ManagedJestClient implements Managed {
                                .multiThreaded(true)
                                
                                .readTimeout(60000)
+                               .maxConnectionIdleTime(10, TimeUnit.SECONDS)
                                .connTimeout(30000)
                                .gson(gb.create())
                                .build());
