@@ -17,15 +17,17 @@ import com.google.gson.GsonBuilder;
 
 public class ManagedJestClient implements Managed {
 
-    private static final int READ_TIMEOUT_MS = 60000;
+    private static final int READ_TIMEOUT = 60000;
 
-    private static final int MAX_CONNECTION_IDLE_SECS = 10;
+    private static final int MAX_CONNECTION_IDLE = 10;
+
+    private static final int CONNECTION_TIMEOUT = 30000;
 
     private final JestClient jestClient;
 
     private final static Logger LOG = LoggerFactory.getLogger(ManagedJestClient.class);
 
-    public JestClient getClient() {
+    public JestClient getJestClient() {
         return this.jestClient;
     }
 
@@ -35,11 +37,11 @@ public class ManagedJestClient implements Managed {
         GsonBuilder gsonBuilder = new GsonBuilder();
         for (String adapter : config.getAdapters()) {
             try {
-                GsonAdapter<?> ga = (GsonAdapter<?>) Class.forName(adapter).newInstance();
-                gsonBuilder.registerTypeAdapter(ga.getType(), ga);
-            } catch (Exception e) {
+                GsonAdapter<?> gsonAdapter = (GsonAdapter<?>) Class.forName(adapter).newInstance();
+                gsonBuilder.registerTypeAdapter(gsonAdapter.getType(), gsonAdapter);
+            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
                 LOG.error(String.format("Unable to instance class adapter %s", adapter), e);
-                throw new RuntimeException(e);
+                throw new IllegalArgumentException(e);
             }
         }
 
@@ -47,11 +49,10 @@ public class ManagedJestClient implements Managed {
 
         JestClientFactory factory = new JestClientFactory();
 
-        int CONNECTION_TIMEOUT_MS = 30000;
-        factory.setHttpClientConfig(new HttpClientConfig.Builder(config.getConnectionURLS()).multiThreaded(true)
+        factory.setHttpClientConfig(new HttpClientConfig.Builder(config.getConnectionURLs()).multiThreaded(true)
 
-        .readTimeout(READ_TIMEOUT_MS).maxConnectionIdleTime(MAX_CONNECTION_IDLE_SECS, TimeUnit.SECONDS)
-                .connTimeout(CONNECTION_TIMEOUT_MS).gson(gsonBuilder.create()).build());
+        .readTimeout(READ_TIMEOUT).maxConnectionIdleTime(MAX_CONNECTION_IDLE, TimeUnit.SECONDS).connTimeout(CONNECTION_TIMEOUT)
+                .gson(gsonBuilder.create()).build());
         this.jestClient = factory.getObject();
     }
 
