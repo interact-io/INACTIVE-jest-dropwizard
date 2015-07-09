@@ -17,7 +17,7 @@ import com.google.gson.GsonBuilder;
 
 /**
  * ManagedJestClient as the name implies is the {@link Managed} instance of a
- * JestClient hooked up into the dropwizard component lifecycle
+ * JestClient hooked up into the dropwizard component lifecycle.
  * 
  * @author matteo
  *
