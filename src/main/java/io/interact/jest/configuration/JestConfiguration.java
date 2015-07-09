@@ -13,9 +13,17 @@ public class JestConfiguration {
 
     @JsonProperty
     @NotNull
-    protected List<String> connectionURLs = Lists.newArrayList("http://localhost:9200");
+    private List<String> connectionURLs = Lists.newArrayList("http://localhost:9200");
 
-    protected List<String> adapters = Lists.newArrayList();
+    private List<String> adapters = Lists.newArrayList();
+
+    /**
+     * Default constructor. This is actually a not really useful comment for an
+     * empty constructor but Sonar is complaining
+     * 
+     */
+    public JestConfiguration() {
+    }
 
     public List<String> getConnectionURLs() {
         return this.connectionURLs;
@@ -30,9 +38,4 @@ public class JestConfiguration {
         return !this.connectionURLs.isEmpty();
     }
 
-    /**
-     * Default constructor
-     */
-    public JestConfiguration() {
-    }
 }

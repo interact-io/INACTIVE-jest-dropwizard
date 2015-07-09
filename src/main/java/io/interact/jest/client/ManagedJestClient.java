@@ -15,21 +15,24 @@ import org.slf4j.LoggerFactory;
 import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.GsonBuilder;
 
+/**
+ * ManagedJestClient as the name implies is the {@link Managed} instance of a
+ * JestClient hooked up into the dropwizard component lifecycle
+ * 
+ * @author matteo
+ *
+ */
 public class ManagedJestClient implements Managed {
 
     private static final int READ_TIMEOUT = 60000;
 
-    private static final int MAX_CONNECTION_IDLE = 10;
+    private static final int MAX_CONNE_IDLE = 10;
 
-    private static final int CONNECTION_TIMEOUT = 30000;
+    private static final int CONN_TIMEOUT = 30000;
 
     private final JestClient jestClient;
 
-    private final static Logger LOG = LoggerFactory.getLogger(ManagedJestClient.class);
-
-    public JestClient getJestClient() {
-        return this.jestClient;
-    }
+    private static final Logger LOG = LoggerFactory.getLogger(ManagedJestClient.class);
 
     public ManagedJestClient(final JestConfiguration config) {
         checkNotNull(config, "JestConfiguration must not be null");
@@ -51,9 +54,13 @@ public class ManagedJestClient implements Managed {
 
         factory.setHttpClientConfig(new HttpClientConfig.Builder(config.getConnectionURLs()).multiThreaded(true)
 
-        .readTimeout(READ_TIMEOUT).maxConnectionIdleTime(MAX_CONNECTION_IDLE, TimeUnit.SECONDS).connTimeout(CONNECTION_TIMEOUT)
+        .readTimeout(READ_TIMEOUT).maxConnectionIdleTime(MAX_CONNE_IDLE, TimeUnit.SECONDS).connTimeout(CONN_TIMEOUT)
                 .gson(gsonBuilder.create()).build());
         this.jestClient = factory.getObject();
+    }
+
+    public final JestClient getJestClient() {
+        return this.jestClient;
     }
 
     @Override
