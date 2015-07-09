@@ -13,9 +13,9 @@ public class JestConfiguration {
 
     @JsonProperty
     @NotNull
-    private List<String> connectionURLs = Lists.newArrayList("http://localhost:9200");
+    protected List<String> connectionURLs = Lists.newArrayList("http://localhost:9200");
 
-    private List<String> adapters = Lists.newArrayList();
+    protected List<String> adapters = Lists.newArrayList();
 
     /**
      * Default constructor. This is actually a not really useful comment for an
@@ -31,6 +31,14 @@ public class JestConfiguration {
 
     public List<String> getAdapters() {
         return this.adapters;
+    }
+
+    public void setConnectionURLs(List<String> connectionURLs) {
+        this.connectionURLs = connectionURLs;
+    }
+
+    public void setAdapters(List<String> adapters) {
+        this.adapters = adapters;
     }
 
     @ValidationMethod
